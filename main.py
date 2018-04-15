@@ -25,15 +25,33 @@ def index():
 
 @app.route('/newpost', methods=['GET', 'POST'])
 def new_post():
+
     
     if request.method == 'POST':
         blog_title = request.form['title']
         blog_body = request.form['blog-body']
-        new_post = Blog(blog_title, blog_body)
-        db.session.add(new_post)
-        db.session.commit()
+        title_error = ''
+        body_error = ''
 
-    return render_template('newpost.html')
+        if (blog_title.strip() == ''):
+            title_error = "Please enter a title"
+
+        else:
+            if (blog_body.strip() == ''):
+                body_error = "Please enter a blog"
+            
+        
+    
+        if not title_error and not body_error:
+            #blog_title = request.form['title']
+            #blog_body = request.form['blog-body']
+            new_post = Blog(blog_title, blog_body)
+            db.session.add(new_post)
+            db.session.commit()
+
+            return render_template('newpost.html')
+        else:
+            return render_template('newpost.html', title_error = title_error, body_error = body_error )
 @app.route('/postpage', methods=['GET', 'POST'])
 def blog_post_page():
     return render_template('posted.html')
