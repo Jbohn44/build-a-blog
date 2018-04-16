@@ -21,6 +21,11 @@ class Blog(db.Model):
 @app.route('/blog', methods=['GET', 'POST'])
 def index():
 
+        if request.args.get('id'):
+            blog_id = request.args.get('id')
+            blog = Blog.query.get(blog_id)
+            return render_template ('display.html', blog = blog)
+
     
         blogs = Blog.query.all()
         return render_template('index.html', blogs = blogs)
@@ -38,9 +43,9 @@ def new_post():
         if (blog_title.strip() == ''):
             title_error = "Please enter a title"
 
-        else:
-            if (blog_body.strip() == ''):
-                body_error = "Please enter a blog"
+        
+        if (blog_body.strip() == ''):
+            body_error = "Please enter a blog"
             
         
     
@@ -52,7 +57,7 @@ def new_post():
             db.session.commit()
 
         
-            return redirect('/blog?id=')
+            return redirect('/blog?id={0}'.format(new_post.id))
         else:
             return render_template('newpost.html', title_error = title_error, body_error = body_error )
 
@@ -60,15 +65,15 @@ def new_post():
         return render_template('newpost.html')
 
 
-#@app.route('/posted')
+#@app.route('/display')
 #def blog_post_page():
     
-    #blog_id = 1 #request.form.get['blog-id']
+    #blog_id = 1 #request.args.get('id')
     #blog = Blog.query.get(blog_id)
     
 
 
-    #return render_template('posted.html', blog = blog)
+    #return render_template('display.html', blog = blog)
 
 
 if __name__ == '__main__':

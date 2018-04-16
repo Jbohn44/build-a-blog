@@ -1,5 +1,11 @@
-
+.error{
+    color: red;
+}
 
 h1.toppage{
+    text-align: center;
+}
+
+h1.display{
     text-align: center;
 }
