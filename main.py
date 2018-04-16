@@ -1,6 +1,7 @@
 from flask import Flask, redirect, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 
+
 app = Flask(__name__)
 app.config['DEBUG'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://build-a-blog:password@localhost:3306/build-a-blog'
@@ -20,8 +21,9 @@ class Blog(db.Model):
 @app.route('/blog', methods=['GET', 'POST'])
 def index():
 
-    blogs = Blog.query.all()
-    return render_template('index.html', blogs = blogs)
+    
+        blogs = Blog.query.all()
+        return render_template('index.html', blogs = blogs)
 
 @app.route('/newpost', methods=['GET', 'POST'])
 def new_post():
@@ -49,12 +51,24 @@ def new_post():
             db.session.add(new_post)
             db.session.commit()
 
-            return render_template('newpost.html')
+        
+            return redirect('/blog')
         else:
             return render_template('newpost.html', title_error = title_error, body_error = body_error )
-@app.route('/postpage', methods=['GET', 'POST'])
-def blog_post_page():
-    return render_template('posted.html')
+
+    else:
+        return render_template('newpost.html')
+
+
+#@app.route('/posted')
+#def blog_post_page():
+    
+    #blog_id = 1 #request.form.get['blog-id']
+    #blog = Blog.query.get(blog_id)
+    
+
+
+    #return render_template('posted.html', blog = blog)
 
 
 if __name__ == '__main__':
