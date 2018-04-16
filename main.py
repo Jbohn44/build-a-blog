@@ -52,7 +52,7 @@ def new_post():
             db.session.commit()
 
         
-            return redirect('/blog')
+            return redirect('/blog?id=')
         else:
             return render_template('newpost.html', title_error = title_error, body_error = body_error )
 
