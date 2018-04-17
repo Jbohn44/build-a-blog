@@ -8,4 +8,18 @@ h1.toppage{
 
 h1.display{
     text-align: center;
+    border: 10px solid rgb(214, 207, 228);
+    background-color: rgb(214, 207, 228);
+    border-radius: 15px;
+    width: 600px;
+    
+}
+
+p.toplinks{
+    font-size: 20px;
+}
+
+body{
+    
+    background-color: rgb(231, 249, 255);
 }

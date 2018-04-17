@@ -18,13 +18,17 @@ class Blog(db.Model):
         self.title = title
         self.body = body
 
+@app.route('/')
+def blog_index():
+    return redirect('/blog')
+
 @app.route('/blog', methods=['GET', 'POST'])
 def index():
 
         if request.args.get('id'):
             blog_id = request.args.get('id')
             blog = Blog.query.get(blog_id)
-            return render_template ('display.html', blog = blog)
+            return render_template('display.html', blog = blog)
 
     
         blogs = Blog.query.all()
@@ -65,15 +69,7 @@ def new_post():
         return render_template('newpost.html')
 
 
-#@app.route('/display')
-#def blog_post_page():
-    
-    #blog_id = 1 #request.args.get('id')
-    #blog = Blog.query.get(blog_id)
-    
 
-
-    #return render_template('display.html', blog = blog)
 
 
 if __name__ == '__main__':
